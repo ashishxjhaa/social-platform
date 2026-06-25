@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import { prisma } from "../db/db";
 import { uploadOnCloudinary } from "../utils/cloudinary";
 import bcrypt from "bcrypt";
+import { generateAccessToken, generateRefreshToken } from "../utils/tokens";
 
 const registerSchema = z.object({
   username: z
@@ -14,6 +15,12 @@ const registerSchema = z.object({
   email: z.email("Please enter a valid email").trim().toLowerCase(),
   fullName: z.string().trim().min(2, "Full name must be at least 2 characters"),
   password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+const loginSchema = z.object({
+  username: z.string("username is required").trim().toLowerCase().optional(),
+  email: z.email("email is required").trim().toLowerCase().optional(),
+  password: z.string().min(1, "password is required"),
 });
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -95,6 +102,75 @@ export const registerUser = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(500).json({
       error: "Register failed",
+    });
+  }
+};
+
+export const loginUser = async (req: Request, res: Response) => {
+  try {
+    const parsedResult = loginSchema.safeParse(req.body);
+    if (!parsedResult.success) {
+      return res.status(400).json({
+        error: parsedResult.error.flatten().fieldErrors,
+      });
+    }
+    const { username, email, password } = parsedResult.data;
+    if (!username && !email) {
+      return res.status(400).json({
+        error: "username or email is required",
+      });
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [{ email }, { username }],
+      },
+    });
+    if (!user) {
+      return res.status(400).json({
+        error: "Invalid user credentials",
+      });
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res.status(401).json({
+        error: "Invalid credentials",
+      });
+    }
+
+    const refreshToken = generateRefreshToken(user.id);
+    const accessToken = generateAccessToken(user.id);
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        refreshToken,
+      },
+    });
+
+    res
+      .status(200)
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .json({
+        message: "Login successfully",
+        accessToken,
+        refreshToken,
+      });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Login failed",
     });
   }
 };

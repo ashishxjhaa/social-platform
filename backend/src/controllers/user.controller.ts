@@ -174,3 +174,36 @@ export const loginUser = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    await prisma.user.update({
+      where: {
+        id: req.user.id,
+      },
+      data: {
+        refreshToken: null,
+      },
+    });
+
+    return res
+      .status(200)
+      .clearCookie("accessToken", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .json({
+        message: "User logged out",
+      });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Failed to logout",
+    });
+  }
+};

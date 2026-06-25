@@ -21,7 +21,10 @@ export const uploadOnCloudinary = async (file: string | undefined) => {
 
     return response;
   } catch (error) {
-    if (file) fs.unlinkSync(file);
+    if (file && fs.existsSync(file)) {
+      fs.unlinkSync(file);
+    }
+
     return null;
   }
 };

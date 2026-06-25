@@ -21,7 +21,7 @@ export const registerUser = async (req: Request, res: Response) => {
     const parsedResult = registerSchema.safeParse(req.body);
     if (!parsedResult.success) {
       return res.status(400).json({
-        error: "All fields are required",
+        error: parsedResult.error.flatten().fieldErrors,
       });
     }
 

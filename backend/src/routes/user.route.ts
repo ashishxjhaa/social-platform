@@ -31,6 +31,4 @@ router.route("/logout").post(verifyJWT, logoutUser);
 
 router.route("/refresh-token").post(refreshAccessToken);
 
-router.route("/chnage-current-password").post(changeCurrentPassword);
-
 export default router;

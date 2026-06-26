@@ -274,7 +274,7 @@ export const changeCurrentPassword = async (req: Request, res: Response) => {
     const { oldPassword, newPassword } = req.body;
     if (!oldPassword || !newPassword) {
       return res.status(400).json({
-        error: "Both fields required",
+        error: "Both fields are required",
       });
     }
 
@@ -316,6 +316,155 @@ export const changeCurrentPassword = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       message: "Password changed successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+export const getCurentuser = async (req: Request, res: Response) => {
+  try {
+    const user = req.user;
+    return res.status(200).json({
+      message: "Current user fetched successfully",
+      user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+export const updateAccountDetails = async (req: Request, res: Response) => {
+  try {
+    const { fullName, email } = req.body;
+    if (!fullName || !email) {
+      return res.status(400).json({
+        error: "All fields are required",
+      });
+    }
+
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email,
+        NOT: {
+          id: userId,
+        },
+      },
+    });
+    if (existingUser) {
+      return res.status(409).json({
+        error: "Email already exists",
+      });
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { fullName, email },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        fullName: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return res.status(200).json({
+      message: "Account details updated successfully",
+      user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+export const updateUserAvatar = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const avatarLocalPath = req.file?.path;
+    if (!avatarLocalPath) {
+      return res.status(400).json({
+        error: "Avatar file is missing",
+      });
+    }
+
+    const avatar = await uploadOnCloudinary(avatarLocalPath);
+    if (!avatar?.secure_url) {
+      return res.status(400).json({
+        error: "Failed to upload avatar",
+      });
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { avatar: avatar.secure_url },
+      select: { avatar: true },
+    });
+
+    return res.status(200).json({
+      message: "Avatar updated successfully",
+      avatar: user.avatar,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+export const updateUserCoverImage = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const coverImageLocalPath = req.file?.path;
+    if (!coverImageLocalPath) {
+      return res.status(400).json({
+        error: "Cover image file is missing",
+      });
+    }
+
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    if (!coverImage?.secure_url) {
+      return res.status(400).json({
+        error: "Failed to upload cover Image",
+      });
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { coverImage: coverImage.secure_url },
+      select: { coverImage: true },
+    });
+
+    return res.status(200).json({
+      message: "Cover Image updated successfully",
+      coverImage: user.coverImage,
     });
   } catch (error) {
     return res.status(500).json({

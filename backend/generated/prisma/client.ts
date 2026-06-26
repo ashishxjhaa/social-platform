@@ -51,3 +51,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Video = Prisma.VideoModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel

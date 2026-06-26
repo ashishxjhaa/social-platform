@@ -10,4 +10,5 @@
  */
 export type * from './models/User.ts'
 export type * from './models/Video.ts'
+export type * from './models/Subscription.ts'
 export type * from './commonInputTypes.ts'

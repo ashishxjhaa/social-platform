@@ -47,7 +47,10 @@ export const registerUser = async (req: Request, res: Response) => {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(parsedResult.data.password, 10);
+    const hashedPassword = await bcrypt.hash(
+      parsedResult.data.password,
+      process.env.SALT_ROUNDS!
+    );
 
     const avatarLocalPath = (req.files as { avatar?: Express.Multer.File[] })
       .avatar?.[0]?.path;
@@ -262,6 +265,61 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
   } catch (error) {
     return res.json(401).json({
       error: "Invalid refresh token",
+    });
+  }
+};
+
+export const changeCurrentPassword = async (req: Request, res: Response) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    if (!oldPassword || !newPassword) {
+      return res.status(400).json({
+        error: "Both fields required",
+      });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: req.user?.id } });
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    const isValidPassword = await bcrypt.compare(oldPassword, user.password);
+    if (!isValidPassword) {
+      return res.status(400).json({
+        error: "Invalid old password",
+      });
+    }
+
+    const isSamePassword = await bcrypt.compare(newPassword, user.password);
+
+    if (isSamePassword) {
+      return res.status(400).json({
+        error: "New password must be different",
+      });
+    }
+
+    const hashNewPassword = await bcrypt.hash(
+      newPassword,
+      process.env.SALT_ROUNDS!
+    );
+
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: hashNewPassword,
+      },
+    });
+
+    return res.status(200).json({
+      message: "Password changed successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
     });
   }
 };

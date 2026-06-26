@@ -566,3 +566,52 @@ export const getUserChannelProfile = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getWatchHistory = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        watchHistory: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            thumbnail: true,
+            duration: true,
+            views: true,
+            isPublished: true,
+            createdAt: true,
+            owner: {
+              select: {
+                id: true,
+                username: true,
+                fullName: true,
+                avatar: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return res.status(200).json({
+      message: "Watch history fetched successfully",
+      watchHistory: user?.watchHistory ?? [],
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};

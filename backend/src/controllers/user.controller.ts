@@ -491,3 +491,78 @@ export const updateUserCoverImage = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getUserChannelProfile = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.params as { username: string };
+    if (!username?.trim()) {
+      return res.status(400).json({
+        error: "username is required",
+      });
+    }
+
+    const currentUserId = req.user?.id;
+    if (!currentUserId) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const channel = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+        fullName: true,
+        username: true,
+        email: true,
+        avatar: true,
+        coverImage: true,
+      },
+    });
+
+    if (!channel) {
+      return res.status(404).json({
+        error: "Channel not found",
+      });
+    }
+
+    const subscribersCount = await prisma.subscription.count({
+      where: {
+        channelId: channel.id,
+      },
+    });
+
+    const channelsSubscribedToCount = await prisma.subscription.count({
+      where: {
+        SubscriberId: channel.id,
+      },
+    });
+
+    const subscription = await prisma.subscription.findFirst({
+      where: {
+        channelId: channel.id,
+        SubscriberId: currentUserId,
+      },
+    });
+
+    return res.status(200).json({
+      message: "Channel fetched successfully",
+      channel: {
+        fullName: channel.fullName,
+        username: channel.username,
+        email: channel.email,
+        avatar: channel.avatar,
+        coverImage: channel.coverImage,
+        subscribersCount,
+        channelsSubscribedToCount,
+        isSubscribed: !!subscription,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
+};

@@ -4,6 +4,7 @@ import { prisma } from "../db/db";
 import { uploadOnCloudinary } from "../utils/cloudinary";
 import bcrypt from "bcrypt";
 import { generateAccessToken, generateRefreshToken } from "../utils/tokens";
+import jwt from "jsonwebtoken";
 
 const registerSchema = z.object({
   username: z
@@ -204,6 +205,63 @@ export const logoutUser = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(500).json({
       error: "Failed to logout",
+    });
+  }
+};
+
+export const refreshAccessToken = async (req: Request, res: Response) => {
+  const incomingRefreshToken =
+    req.cookies.refreshToken || req.body.refreshToken;
+  if (!incomingRefreshToken) {
+    return res.status(401).json({
+      error: "Unautorized request",
+    });
+  }
+
+  try {
+    const decodedToken = jwt.verify(
+      incomingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET as string
+    );
+
+    const user = await prisma.user.findUnique({
+      where: { id: decodedToken?.id },
+    });
+    if (!user) {
+      return res.status(401).json({
+        error: "Invalid refresh token",
+      });
+    }
+
+    if (incomingRefreshToken !== user.refreshToken) {
+      return res.status(401).json({
+        error: "Refresh token is expired or used",
+      });
+    }
+
+    const refreshToken = generateRefreshToken(user.id);
+    const accessToken = generateAccessToken(user.id);
+
+    res
+      .status(200)
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .json({
+        message: "Access token refreshed",
+        accessToken,
+        refreshToken,
+      });
+  } catch (error) {
+    return res.json(401).json({
+      error: "Invalid refresh token",
     });
   }
 };

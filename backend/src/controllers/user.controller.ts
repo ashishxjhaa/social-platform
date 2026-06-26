@@ -325,7 +325,7 @@ export const changeCurrentPassword = async (req: Request, res: Response) => {
   }
 };
 
-export const getCurentuser = async (req: Request, res: Response) => {
+export const getCurrentuser = async (req: Request, res: Response) => {
   try {
     const user = req.user;
     return res.status(200).json({

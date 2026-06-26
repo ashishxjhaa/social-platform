@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary";
 import bcrypt from "bcrypt";
 import { generateAccessToken, generateRefreshToken } from "../utils/tokens";
 import jwt from "jsonwebtoken";
+import { deleteImageFromCloudinary } from "../utils/image";
 
 const registerSchema = z.object({
   username: z
@@ -409,6 +410,13 @@ export const updateUserAvatar = async (req: Request, res: Response) => {
       });
     }
 
+    const existingUser = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        avatar: true,
+      },
+    });
+
     const avatar = await uploadOnCloudinary(avatarLocalPath);
     if (!avatar?.secure_url) {
       return res.status(400).json({
@@ -421,6 +429,8 @@ export const updateUserAvatar = async (req: Request, res: Response) => {
       data: { avatar: avatar.secure_url },
       select: { avatar: true },
     });
+
+    await deleteImageFromCloudinary(existingUser?.avatar ?? "");
 
     return res.status(200).json({
       message: "Avatar updated successfully",
@@ -449,6 +459,13 @@ export const updateUserCoverImage = async (req: Request, res: Response) => {
       });
     }
 
+    const existingUser = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        coverImage: true,
+      },
+    });
+
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
     if (!coverImage?.secure_url) {
       return res.status(400).json({
@@ -461,6 +478,8 @@ export const updateUserCoverImage = async (req: Request, res: Response) => {
       data: { coverImage: coverImage.secure_url },
       select: { coverImage: true },
     });
+
+    await deleteImageFromCloudinary(existingUser?.coverImage ?? "");
 
     return res.status(200).json({
       message: "Cover Image updated successfully",

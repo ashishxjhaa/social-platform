@@ -5,6 +5,10 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "./src/routes/user.route";
 import videoRouter from "./src/routes/video.routes";
+import tweetRouter from "./src/routes/tweet.route";
+import subscriptionRouter from "./src/routes/subscription.route";
+import commentRouter from "./src/routes/comment.route";
+import likeRouter from "./src/routes/like.route";
 
 const app = express();
 

@@ -65,6 +65,8 @@ model Subscription {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([SubscriberId, channelId])
 }
 
 model Tweet {
@@ -90,6 +92,8 @@ model Comment {
   videoId String
   video   Video  @relation(fields: [videoId], references: [id])
 
+  likes Like[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -106,6 +110,13 @@ model Like {
   tweetId String?
   tweet   Tweet?  @relation(fields: [tweetId], references: [id])
 
+  commentId String?
+  comment   Comment? @relation(fields: [commentId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([userId, videoId])
+  @@unique([userId, tweetId])
+  @@unique([userId, commentId])
 }

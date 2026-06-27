@@ -8,9 +8,9 @@ import {
 
 const router = Router();
 
-router.route("/c/:channelId").get(verifyJWT, getSubscribedChannels);
+router.route("/c/:channelId").get(verifyJWT, getUserChannelSubscribers);
 router.route("/c/:channelId").post(verifyJWT, toggleSubscription);
 
-router.route("/u/:subscriberId").get(verifyJWT, getUserChannelSubscribers);
+router.route("/u/:subscriberId").get(verifyJWT, getSubscribedChannels);
 
 export default router;

@@ -29,6 +29,7 @@ export type LikeMinAggregateOutputType = {
   userId: string | null
   videoId: string | null
   tweetId: string | null
+  commentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -38,6 +39,7 @@ export type LikeMaxAggregateOutputType = {
   userId: string | null
   videoId: string | null
   tweetId: string | null
+  commentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -47,6 +49,7 @@ export type LikeCountAggregateOutputType = {
   userId: number
   videoId: number
   tweetId: number
+  commentId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -58,6 +61,7 @@ export type LikeMinAggregateInputType = {
   userId?: true
   videoId?: true
   tweetId?: true
+  commentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -67,6 +71,7 @@ export type LikeMaxAggregateInputType = {
   userId?: true
   videoId?: true
   tweetId?: true
+  commentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -76,6 +81,7 @@ export type LikeCountAggregateInputType = {
   userId?: true
   videoId?: true
   tweetId?: true
+  commentId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -158,6 +164,7 @@ export type LikeGroupByOutputType = {
   userId: string
   videoId: string | null
   tweetId: string | null
+  commentId: string | null
   createdAt: Date
   updatedAt: Date
   _count: LikeCountAggregateOutputType | null
@@ -188,11 +195,13 @@ export type LikeWhereInput = {
   userId?: Prisma.StringFilter<"Like"> | string
   videoId?: Prisma.StringNullableFilter<"Like"> | string | null
   tweetId?: Prisma.StringNullableFilter<"Like"> | string | null
+  commentId?: Prisma.StringNullableFilter<"Like"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Like"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Like"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   video?: Prisma.XOR<Prisma.VideoNullableScalarRelationFilter, Prisma.VideoWhereInput> | null
   tweet?: Prisma.XOR<Prisma.TweetNullableScalarRelationFilter, Prisma.TweetWhereInput> | null
+  comment?: Prisma.XOR<Prisma.CommentNullableScalarRelationFilter, Prisma.CommentWhereInput> | null
 }
 
 export type LikeOrderByWithRelationInput = {
@@ -200,33 +209,41 @@ export type LikeOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   videoId?: Prisma.SortOrderInput | Prisma.SortOrder
   tweetId?: Prisma.SortOrderInput | Prisma.SortOrder
+  commentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   video?: Prisma.VideoOrderByWithRelationInput
   tweet?: Prisma.TweetOrderByWithRelationInput
+  comment?: Prisma.CommentOrderByWithRelationInput
 }
 
 export type LikeWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  userId_videoId?: Prisma.LikeUserIdVideoIdCompoundUniqueInput
+  userId_tweetId?: Prisma.LikeUserIdTweetIdCompoundUniqueInput
+  userId_commentId?: Prisma.LikeUserIdCommentIdCompoundUniqueInput
   AND?: Prisma.LikeWhereInput | Prisma.LikeWhereInput[]
   OR?: Prisma.LikeWhereInput[]
   NOT?: Prisma.LikeWhereInput | Prisma.LikeWhereInput[]
   userId?: Prisma.StringFilter<"Like"> | string
   videoId?: Prisma.StringNullableFilter<"Like"> | string | null
   tweetId?: Prisma.StringNullableFilter<"Like"> | string | null
+  commentId?: Prisma.StringNullableFilter<"Like"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Like"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Like"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   video?: Prisma.XOR<Prisma.VideoNullableScalarRelationFilter, Prisma.VideoWhereInput> | null
   tweet?: Prisma.XOR<Prisma.TweetNullableScalarRelationFilter, Prisma.TweetWhereInput> | null
-}, "id">
+  comment?: Prisma.XOR<Prisma.CommentNullableScalarRelationFilter, Prisma.CommentWhereInput> | null
+}, "id" | "userId_videoId" | "userId_tweetId" | "userId_commentId">
 
 export type LikeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   videoId?: Prisma.SortOrderInput | Prisma.SortOrder
   tweetId?: Prisma.SortOrderInput | Prisma.SortOrder
+  commentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LikeCountOrderByAggregateInput
@@ -242,6 +259,7 @@ export type LikeScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Like"> | string
   videoId?: Prisma.StringNullableWithAggregatesFilter<"Like"> | string | null
   tweetId?: Prisma.StringNullableWithAggregatesFilter<"Like"> | string | null
+  commentId?: Prisma.StringNullableWithAggregatesFilter<"Like"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Like"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Like"> | Date | string
 }
@@ -253,6 +271,7 @@ export type LikeCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutLikeInput
   video?: Prisma.VideoCreateNestedOneWithoutLikesInput
   tweet?: Prisma.TweetCreateNestedOneWithoutLikesInput
+  comment?: Prisma.CommentCreateNestedOneWithoutLikesInput
 }
 
 export type LikeUncheckedCreateInput = {
@@ -260,6 +279,7 @@ export type LikeUncheckedCreateInput = {
   userId: string
   videoId?: string | null
   tweetId?: string | null
+  commentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -271,6 +291,7 @@ export type LikeUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutLikeNestedInput
   video?: Prisma.VideoUpdateOneWithoutLikesNestedInput
   tweet?: Prisma.TweetUpdateOneWithoutLikesNestedInput
+  comment?: Prisma.CommentUpdateOneWithoutLikesNestedInput
 }
 
 export type LikeUncheckedUpdateInput = {
@@ -278,6 +299,7 @@ export type LikeUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tweetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -287,6 +309,7 @@ export type LikeCreateManyInput = {
   userId: string
   videoId?: string | null
   tweetId?: string | null
+  commentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -302,6 +325,7 @@ export type LikeUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tweetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -316,11 +340,27 @@ export type LikeOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type LikeUserIdVideoIdCompoundUniqueInput = {
+  userId: string
+  videoId: string
+}
+
+export type LikeUserIdTweetIdCompoundUniqueInput = {
+  userId: string
+  tweetId: string
+}
+
+export type LikeUserIdCommentIdCompoundUniqueInput = {
+  userId: string
+  commentId: string
+}
+
 export type LikeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   videoId?: Prisma.SortOrder
   tweetId?: Prisma.SortOrder
+  commentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -330,6 +370,7 @@ export type LikeMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   videoId?: Prisma.SortOrder
   tweetId?: Prisma.SortOrder
+  commentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -339,6 +380,7 @@ export type LikeMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   videoId?: Prisma.SortOrder
   tweetId?: Prisma.SortOrder
+  commentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -469,18 +511,62 @@ export type LikeUncheckedUpdateManyWithoutTweetNestedInput = {
   deleteMany?: Prisma.LikeScalarWhereInput | Prisma.LikeScalarWhereInput[]
 }
 
+export type LikeCreateNestedManyWithoutCommentInput = {
+  create?: Prisma.XOR<Prisma.LikeCreateWithoutCommentInput, Prisma.LikeUncheckedCreateWithoutCommentInput> | Prisma.LikeCreateWithoutCommentInput[] | Prisma.LikeUncheckedCreateWithoutCommentInput[]
+  connectOrCreate?: Prisma.LikeCreateOrConnectWithoutCommentInput | Prisma.LikeCreateOrConnectWithoutCommentInput[]
+  createMany?: Prisma.LikeCreateManyCommentInputEnvelope
+  connect?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+}
+
+export type LikeUncheckedCreateNestedManyWithoutCommentInput = {
+  create?: Prisma.XOR<Prisma.LikeCreateWithoutCommentInput, Prisma.LikeUncheckedCreateWithoutCommentInput> | Prisma.LikeCreateWithoutCommentInput[] | Prisma.LikeUncheckedCreateWithoutCommentInput[]
+  connectOrCreate?: Prisma.LikeCreateOrConnectWithoutCommentInput | Prisma.LikeCreateOrConnectWithoutCommentInput[]
+  createMany?: Prisma.LikeCreateManyCommentInputEnvelope
+  connect?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+}
+
+export type LikeUpdateManyWithoutCommentNestedInput = {
+  create?: Prisma.XOR<Prisma.LikeCreateWithoutCommentInput, Prisma.LikeUncheckedCreateWithoutCommentInput> | Prisma.LikeCreateWithoutCommentInput[] | Prisma.LikeUncheckedCreateWithoutCommentInput[]
+  connectOrCreate?: Prisma.LikeCreateOrConnectWithoutCommentInput | Prisma.LikeCreateOrConnectWithoutCommentInput[]
+  upsert?: Prisma.LikeUpsertWithWhereUniqueWithoutCommentInput | Prisma.LikeUpsertWithWhereUniqueWithoutCommentInput[]
+  createMany?: Prisma.LikeCreateManyCommentInputEnvelope
+  set?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+  disconnect?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+  delete?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+  connect?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+  update?: Prisma.LikeUpdateWithWhereUniqueWithoutCommentInput | Prisma.LikeUpdateWithWhereUniqueWithoutCommentInput[]
+  updateMany?: Prisma.LikeUpdateManyWithWhereWithoutCommentInput | Prisma.LikeUpdateManyWithWhereWithoutCommentInput[]
+  deleteMany?: Prisma.LikeScalarWhereInput | Prisma.LikeScalarWhereInput[]
+}
+
+export type LikeUncheckedUpdateManyWithoutCommentNestedInput = {
+  create?: Prisma.XOR<Prisma.LikeCreateWithoutCommentInput, Prisma.LikeUncheckedCreateWithoutCommentInput> | Prisma.LikeCreateWithoutCommentInput[] | Prisma.LikeUncheckedCreateWithoutCommentInput[]
+  connectOrCreate?: Prisma.LikeCreateOrConnectWithoutCommentInput | Prisma.LikeCreateOrConnectWithoutCommentInput[]
+  upsert?: Prisma.LikeUpsertWithWhereUniqueWithoutCommentInput | Prisma.LikeUpsertWithWhereUniqueWithoutCommentInput[]
+  createMany?: Prisma.LikeCreateManyCommentInputEnvelope
+  set?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+  disconnect?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+  delete?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+  connect?: Prisma.LikeWhereUniqueInput | Prisma.LikeWhereUniqueInput[]
+  update?: Prisma.LikeUpdateWithWhereUniqueWithoutCommentInput | Prisma.LikeUpdateWithWhereUniqueWithoutCommentInput[]
+  updateMany?: Prisma.LikeUpdateManyWithWhereWithoutCommentInput | Prisma.LikeUpdateManyWithWhereWithoutCommentInput[]
+  deleteMany?: Prisma.LikeScalarWhereInput | Prisma.LikeScalarWhereInput[]
+}
+
 export type LikeCreateWithoutUserInput = {
   id?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   video?: Prisma.VideoCreateNestedOneWithoutLikesInput
   tweet?: Prisma.TweetCreateNestedOneWithoutLikesInput
+  comment?: Prisma.CommentCreateNestedOneWithoutLikesInput
 }
 
 export type LikeUncheckedCreateWithoutUserInput = {
   id?: string
   videoId?: string | null
   tweetId?: string | null
+  commentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -519,6 +605,7 @@ export type LikeScalarWhereInput = {
   userId?: Prisma.StringFilter<"Like"> | string
   videoId?: Prisma.StringNullableFilter<"Like"> | string | null
   tweetId?: Prisma.StringNullableFilter<"Like"> | string | null
+  commentId?: Prisma.StringNullableFilter<"Like"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Like"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Like"> | Date | string
 }
@@ -529,12 +616,14 @@ export type LikeCreateWithoutVideoInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutLikeInput
   tweet?: Prisma.TweetCreateNestedOneWithoutLikesInput
+  comment?: Prisma.CommentCreateNestedOneWithoutLikesInput
 }
 
 export type LikeUncheckedCreateWithoutVideoInput = {
   id?: string
   userId: string
   tweetId?: string | null
+  commentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -571,12 +660,14 @@ export type LikeCreateWithoutTweetInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutLikeInput
   video?: Prisma.VideoCreateNestedOneWithoutLikesInput
+  comment?: Prisma.CommentCreateNestedOneWithoutLikesInput
 }
 
 export type LikeUncheckedCreateWithoutTweetInput = {
   id?: string
   userId: string
   videoId?: string | null
+  commentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -607,10 +698,55 @@ export type LikeUpdateManyWithWhereWithoutTweetInput = {
   data: Prisma.XOR<Prisma.LikeUpdateManyMutationInput, Prisma.LikeUncheckedUpdateManyWithoutTweetInput>
 }
 
+export type LikeCreateWithoutCommentInput = {
+  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutLikeInput
+  video?: Prisma.VideoCreateNestedOneWithoutLikesInput
+  tweet?: Prisma.TweetCreateNestedOneWithoutLikesInput
+}
+
+export type LikeUncheckedCreateWithoutCommentInput = {
+  id?: string
+  userId: string
+  videoId?: string | null
+  tweetId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LikeCreateOrConnectWithoutCommentInput = {
+  where: Prisma.LikeWhereUniqueInput
+  create: Prisma.XOR<Prisma.LikeCreateWithoutCommentInput, Prisma.LikeUncheckedCreateWithoutCommentInput>
+}
+
+export type LikeCreateManyCommentInputEnvelope = {
+  data: Prisma.LikeCreateManyCommentInput | Prisma.LikeCreateManyCommentInput[]
+  skipDuplicates?: boolean
+}
+
+export type LikeUpsertWithWhereUniqueWithoutCommentInput = {
+  where: Prisma.LikeWhereUniqueInput
+  update: Prisma.XOR<Prisma.LikeUpdateWithoutCommentInput, Prisma.LikeUncheckedUpdateWithoutCommentInput>
+  create: Prisma.XOR<Prisma.LikeCreateWithoutCommentInput, Prisma.LikeUncheckedCreateWithoutCommentInput>
+}
+
+export type LikeUpdateWithWhereUniqueWithoutCommentInput = {
+  where: Prisma.LikeWhereUniqueInput
+  data: Prisma.XOR<Prisma.LikeUpdateWithoutCommentInput, Prisma.LikeUncheckedUpdateWithoutCommentInput>
+}
+
+export type LikeUpdateManyWithWhereWithoutCommentInput = {
+  where: Prisma.LikeScalarWhereInput
+  data: Prisma.XOR<Prisma.LikeUpdateManyMutationInput, Prisma.LikeUncheckedUpdateManyWithoutCommentInput>
+}
+
 export type LikeCreateManyUserInput = {
   id?: string
   videoId?: string | null
   tweetId?: string | null
+  commentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -621,12 +757,14 @@ export type LikeUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   video?: Prisma.VideoUpdateOneWithoutLikesNestedInput
   tweet?: Prisma.TweetUpdateOneWithoutLikesNestedInput
+  comment?: Prisma.CommentUpdateOneWithoutLikesNestedInput
 }
 
 export type LikeUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tweetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -635,6 +773,7 @@ export type LikeUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tweetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -643,6 +782,7 @@ export type LikeCreateManyVideoInput = {
   id?: string
   userId: string
   tweetId?: string | null
+  commentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -653,12 +793,14 @@ export type LikeUpdateWithoutVideoInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutLikeNestedInput
   tweet?: Prisma.TweetUpdateOneWithoutLikesNestedInput
+  comment?: Prisma.CommentUpdateOneWithoutLikesNestedInput
 }
 
 export type LikeUncheckedUpdateWithoutVideoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   tweetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -667,6 +809,7 @@ export type LikeUncheckedUpdateManyWithoutVideoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   tweetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -675,6 +818,7 @@ export type LikeCreateManyTweetInput = {
   id?: string
   userId: string
   videoId?: string | null
+  commentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -685,12 +829,14 @@ export type LikeUpdateWithoutTweetInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutLikeNestedInput
   video?: Prisma.VideoUpdateOneWithoutLikesNestedInput
+  comment?: Prisma.CommentUpdateOneWithoutLikesNestedInput
 }
 
 export type LikeUncheckedUpdateWithoutTweetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -699,6 +845,43 @@ export type LikeUncheckedUpdateManyWithoutTweetInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  commentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LikeCreateManyCommentInput = {
+  id?: string
+  userId: string
+  videoId?: string | null
+  tweetId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type LikeUpdateWithoutCommentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutLikeNestedInput
+  video?: Prisma.VideoUpdateOneWithoutLikesNestedInput
+  tweet?: Prisma.TweetUpdateOneWithoutLikesNestedInput
+}
+
+export type LikeUncheckedUpdateWithoutCommentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tweetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type LikeUncheckedUpdateManyWithoutCommentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  videoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tweetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -710,11 +893,13 @@ export type LikeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   userId?: boolean
   videoId?: boolean
   tweetId?: boolean
+  commentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   video?: boolean | Prisma.Like$videoArgs<ExtArgs>
   tweet?: boolean | Prisma.Like$tweetArgs<ExtArgs>
+  comment?: boolean | Prisma.Like$commentArgs<ExtArgs>
 }, ExtArgs["result"]["like"]>
 
 export type LikeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -722,11 +907,13 @@ export type LikeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   userId?: boolean
   videoId?: boolean
   tweetId?: boolean
+  commentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   video?: boolean | Prisma.Like$videoArgs<ExtArgs>
   tweet?: boolean | Prisma.Like$tweetArgs<ExtArgs>
+  comment?: boolean | Prisma.Like$commentArgs<ExtArgs>
 }, ExtArgs["result"]["like"]>
 
 export type LikeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -734,11 +921,13 @@ export type LikeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   userId?: boolean
   videoId?: boolean
   tweetId?: boolean
+  commentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   video?: boolean | Prisma.Like$videoArgs<ExtArgs>
   tweet?: boolean | Prisma.Like$tweetArgs<ExtArgs>
+  comment?: boolean | Prisma.Like$commentArgs<ExtArgs>
 }, ExtArgs["result"]["like"]>
 
 export type LikeSelectScalar = {
@@ -746,25 +935,29 @@ export type LikeSelectScalar = {
   userId?: boolean
   videoId?: boolean
   tweetId?: boolean
+  commentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type LikeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "videoId" | "tweetId" | "createdAt" | "updatedAt", ExtArgs["result"]["like"]>
+export type LikeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "videoId" | "tweetId" | "commentId" | "createdAt" | "updatedAt", ExtArgs["result"]["like"]>
 export type LikeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   video?: boolean | Prisma.Like$videoArgs<ExtArgs>
   tweet?: boolean | Prisma.Like$tweetArgs<ExtArgs>
+  comment?: boolean | Prisma.Like$commentArgs<ExtArgs>
 }
 export type LikeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   video?: boolean | Prisma.Like$videoArgs<ExtArgs>
   tweet?: boolean | Prisma.Like$tweetArgs<ExtArgs>
+  comment?: boolean | Prisma.Like$commentArgs<ExtArgs>
 }
 export type LikeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   video?: boolean | Prisma.Like$videoArgs<ExtArgs>
   tweet?: boolean | Prisma.Like$tweetArgs<ExtArgs>
+  comment?: boolean | Prisma.Like$commentArgs<ExtArgs>
 }
 
 export type $LikePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -773,12 +966,14 @@ export type $LikePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     user: Prisma.$UserPayload<ExtArgs>
     video: Prisma.$VideoPayload<ExtArgs> | null
     tweet: Prisma.$TweetPayload<ExtArgs> | null
+    comment: Prisma.$CommentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
     videoId: string | null
     tweetId: string | null
+    commentId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["like"]>
@@ -1178,6 +1373,7 @@ export interface Prisma__LikeClient<T, Null = never, ExtArgs extends runtime.Typ
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   video<T extends Prisma.Like$videoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Like$videoArgs<ExtArgs>>): Prisma.Prisma__VideoClient<runtime.Types.Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   tweet<T extends Prisma.Like$tweetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Like$tweetArgs<ExtArgs>>): Prisma.Prisma__TweetClient<runtime.Types.Result.GetResult<Prisma.$TweetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  comment<T extends Prisma.Like$commentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Like$commentArgs<ExtArgs>>): Prisma.Prisma__CommentClient<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1211,6 +1407,7 @@ export interface LikeFieldRefs {
   readonly userId: Prisma.FieldRef<"Like", 'String'>
   readonly videoId: Prisma.FieldRef<"Like", 'String'>
   readonly tweetId: Prisma.FieldRef<"Like", 'String'>
+  readonly commentId: Prisma.FieldRef<"Like", 'String'>
   readonly createdAt: Prisma.FieldRef<"Like", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Like", 'DateTime'>
 }
@@ -1649,6 +1846,25 @@ export type Like$tweetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.TweetInclude<ExtArgs> | null
   where?: Prisma.TweetWhereInput
+}
+
+/**
+ * Like.comment
+ */
+export type Like$commentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Comment
+   */
+  select?: Prisma.CommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Comment
+   */
+  omit?: Prisma.CommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CommentInclude<ExtArgs> | null
+  where?: Prisma.CommentWhereInput
 }
 
 /**

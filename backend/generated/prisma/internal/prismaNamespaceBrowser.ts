@@ -147,6 +147,7 @@ export const LikeScalarFieldEnum = {
   userId: 'userId',
   videoId: 'videoId',
   tweetId: 'tweetId',
+  commentId: 'commentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

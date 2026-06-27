@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
 import { uploadOnCloudinary } from "../utils/cloudinary";
 import { prisma } from "../db/db";
+import { deleteImageFromCloudinary } from "../utils/image";
+import { deleteVideoFromCloudinary } from "../utils/video";
 
 export const publishVideo = async (req: Request, res: Response) => {
   try {
@@ -88,25 +90,243 @@ export const publishVideo = async (req: Request, res: Response) => {
 };
 
 export const getAllVideos = async (req: Request, res: Response) => {
-  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
-  //TODO: get all videos based on query, sort, pagination
+  try {
+    const videos = await prisma.video.findMany({
+      where: {
+        isPublished: true,
+      },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            username: true,
+            fullName: true,
+            avatar: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return res.status(200).json({
+      message: "Videos fetched successfully",
+      videos,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
 };
 
 export const getVideoById = async (req: Request, res: Response) => {
-  const { videoId } = req.params;
-  //TODO: get video by id
+  try {
+    const { videoId } = req.params as { videoId: string };
+
+    const video = await prisma.video.findUnique({
+      where: {
+        id: videoId,
+      },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            username: true,
+            fullName: true,
+            avatar: true,
+          },
+        },
+      },
+    });
+
+    if (!video) {
+      return res.status(404).json({
+        error: "Video not found",
+      });
+    }
+
+    await prisma.video.update({
+      where: {
+        id: videoId,
+      },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+
+    return res.status(200).json({
+      message: "Video fetched successfully",
+      video,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
 };
 
 export const updateVideo = async (req: Request, res: Response) => {
-  const { videoId } = req.params;
-  //TODO: update video details like title, description, thumbnail
+  try {
+    const userId = req.user?.id;
+    const { videoId } = req.params;
+    const { title, description } = req.body;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const video = await prisma.video.findUnique({
+      where: {
+        id: videoId,
+      },
+    });
+
+    if (!video) {
+      return res.status(404).json({
+        error: "Video not found",
+      });
+    }
+
+    if (video.ownerId !== userId) {
+      return res.status(403).json({
+        error: "Forbidden",
+      });
+    }
+
+    const data: any = {};
+
+    if (title) data.title = title;
+    if (description) data.description = description;
+
+    const thumbnailLocalPath = req.file?.path;
+
+    if (thumbnailLocalPath) {
+      const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
+
+      if (thumbnail?.secure_url) {
+        data.thumbnail = thumbnail.secure_url;
+      }
+    }
+
+    const updatedVideo = await prisma.video.update({
+      where: {
+        id: videoId,
+      },
+      data,
+    });
+
+    await deleteImageFromCloudinary(video.thumbnail ?? "");
+
+    return res.status(200).json({
+      message: "Video updated successfully",
+      video: updatedVideo,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
 };
 
 export const deleteVideo = async (req: Request, res: Response) => {
-  const { videoId } = req.params;
-  //TODO: delete video
+  try {
+    const userId = req.user?.id;
+    const { videoId } = req.params;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const video = await prisma.video.findUnique({
+      where: {
+        id: videoId,
+      },
+    });
+
+    if (!video) {
+      return res.status(404).json({
+        error: "Video not found",
+      });
+    }
+
+    if (video.ownerId !== userId) {
+      return res.status(403).json({
+        error: "Forbidden",
+      });
+    }
+
+    await prisma.video.delete({
+      where: {
+        id: videoId,
+      },
+    });
+
+    await deleteVideoFromCloudinary(video.videoFile);
+    await deleteImageFromCloudinary(video.thumbnail);
+
+    return res.status(200).json({
+      message: "Video deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
 };
 
 export const togglePublishStatus = async (req: Request, res: Response) => {
-  const { videoId } = req.params;
+  try {
+    const userId = req.user?.id;
+    const { videoId } = req.params;
+
+    if (!userId) {
+      return res.status(401).json({
+        error: "Unauthorized",
+      });
+    }
+
+    const video = await prisma.video.findUnique({
+      where: {
+        id: videoId,
+      },
+    });
+
+    if (!video) {
+      return res.status(404).json({
+        error: "Video not found",
+      });
+    }
+
+    if (video.ownerId !== userId) {
+      return res.status(403).json({
+        error: "Forbidden",
+      });
+    }
+
+    const updatedVideo = await prisma.video.update({
+      where: {
+        id: videoId,
+      },
+      data: {
+        isPublished: !video.isPublished,
+      },
+    });
+
+    return res.status(200).json({
+      message: "Publish status updated successfully",
+      video: updatedVideo,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+    });
+  }
 };

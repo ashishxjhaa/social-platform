@@ -23,6 +23,11 @@ model User {
   subscriptions Subscription[] @relation("Subscriber")
   subscribers   Subscription[] @relation("Channel")
 
+  tweets Tweet[] @relation("Tweet")
+
+  comments Comment[]
+  like     Like[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -42,6 +47,9 @@ model Video {
 
   watchedBy User[] @relation("WatchHistory")
 
+  comments Comment[]
+  likes    Like[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -54,6 +62,49 @@ model Subscription {
 
   channelId String
   channel   User   @relation("Channel", fields: [channelId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tweet {
+  id      String @id @default(uuid())
+  content String
+
+  ownerId String
+  owner   User   @relation("Tweet", fields: [ownerId], references: [id])
+
+  likes Like[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id      String @id @default(uuid())
+  content String
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+
+  videoId String
+  video   Video  @relation(fields: [videoId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Like {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  videoId String?
+  video   Video?  @relation(fields: [videoId], references: [id])
+
+  tweetId String?
+  tweet   Tweet?  @relation(fields: [tweetId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

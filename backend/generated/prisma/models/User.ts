@@ -226,6 +226,9 @@ export type UserWhereInput = {
   watchHistory?: Prisma.VideoListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
   subscribers?: Prisma.SubscriptionListRelationFilter
+  tweets?: Prisma.TweetListRelationFilter
+  comments?: Prisma.CommentListRelationFilter
+  like?: Prisma.LikeListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -243,6 +246,9 @@ export type UserOrderByWithRelationInput = {
   watchHistory?: Prisma.VideoOrderByRelationAggregateInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
   subscribers?: Prisma.SubscriptionOrderByRelationAggregateInput
+  tweets?: Prisma.TweetOrderByRelationAggregateInput
+  comments?: Prisma.CommentOrderByRelationAggregateInput
+  like?: Prisma.LikeOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -263,6 +269,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   watchHistory?: Prisma.VideoListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
   subscribers?: Prisma.SubscriptionListRelationFilter
+  tweets?: Prisma.TweetListRelationFilter
+  comments?: Prisma.CommentListRelationFilter
+  like?: Prisma.LikeListRelationFilter
 }, "id" | "username" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -312,6 +321,9 @@ export type UserCreateInput = {
   watchHistory?: Prisma.VideoCreateNestedManyWithoutWatchedByInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutSubscriberInput
   subscribers?: Prisma.SubscriptionCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -329,6 +341,9 @@ export type UserUncheckedCreateInput = {
   watchHistory?: Prisma.VideoUncheckedCreateNestedManyWithoutWatchedByInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutSubscriberInput
   subscribers?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetUncheckedCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -346,6 +361,9 @@ export type UserUpdateInput = {
   watchHistory?: Prisma.VideoUpdateManyWithoutWatchedByNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutSubscriberNestedInput
   subscribers?: Prisma.SubscriptionUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -363,6 +381,9 @@ export type UserUncheckedUpdateInput = {
   watchHistory?: Prisma.VideoUncheckedUpdateManyWithoutWatchedByNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutSubscriberNestedInput
   subscribers?: Prisma.SubscriptionUncheckedUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUncheckedUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -550,6 +571,48 @@ export type UserUpdateOneRequiredWithoutSubscribersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscribersInput, Prisma.UserUpdateWithoutSubscribersInput>, Prisma.UserUncheckedUpdateWithoutSubscribersInput>
 }
 
+export type UserCreateNestedOneWithoutTweetsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTweetsInput, Prisma.UserUncheckedCreateWithoutTweetsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTweetsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTweetsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTweetsInput, Prisma.UserUncheckedCreateWithoutTweetsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTweetsInput
+  upsert?: Prisma.UserUpsertWithoutTweetsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTweetsInput, Prisma.UserUpdateWithoutTweetsInput>, Prisma.UserUncheckedUpdateWithoutTweetsInput>
+}
+
+export type UserCreateNestedOneWithoutCommentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCommentsInput, Prisma.UserUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCommentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCommentsInput, Prisma.UserUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCommentsInput
+  upsert?: Prisma.UserUpsertWithoutCommentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCommentsInput, Prisma.UserUpdateWithoutCommentsInput>, Prisma.UserUncheckedUpdateWithoutCommentsInput>
+}
+
+export type UserCreateNestedOneWithoutLikeInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLikeInput, Prisma.UserUncheckedCreateWithoutLikeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLikeInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLikeNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLikeInput, Prisma.UserUncheckedCreateWithoutLikeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLikeInput
+  upsert?: Prisma.UserUpsertWithoutLikeInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLikeInput, Prisma.UserUpdateWithoutLikeInput>, Prisma.UserUncheckedUpdateWithoutLikeInput>
+}
+
 export type UserCreateWithoutVideosInput = {
   id?: string
   username: string
@@ -564,6 +627,9 @@ export type UserCreateWithoutVideosInput = {
   watchHistory?: Prisma.VideoCreateNestedManyWithoutWatchedByInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutSubscriberInput
   subscribers?: Prisma.SubscriptionCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVideosInput = {
@@ -580,6 +646,9 @@ export type UserUncheckedCreateWithoutVideosInput = {
   watchHistory?: Prisma.VideoUncheckedCreateNestedManyWithoutWatchedByInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutSubscriberInput
   subscribers?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetUncheckedCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVideosInput = {
@@ -601,6 +670,9 @@ export type UserCreateWithoutWatchHistoryInput = {
   videos?: Prisma.VideoCreateNestedManyWithoutOwnerInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutSubscriberInput
   subscribers?: Prisma.SubscriptionCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWatchHistoryInput = {
@@ -617,6 +689,9 @@ export type UserUncheckedCreateWithoutWatchHistoryInput = {
   videos?: Prisma.VideoUncheckedCreateNestedManyWithoutOwnerInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutSubscriberInput
   subscribers?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetUncheckedCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWatchHistoryInput = {
@@ -649,6 +724,9 @@ export type UserUpdateWithoutVideosInput = {
   watchHistory?: Prisma.VideoUpdateManyWithoutWatchedByNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutSubscriberNestedInput
   subscribers?: Prisma.SubscriptionUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVideosInput = {
@@ -665,6 +743,9 @@ export type UserUncheckedUpdateWithoutVideosInput = {
   watchHistory?: Prisma.VideoUncheckedUpdateManyWithoutWatchedByNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutSubscriberNestedInput
   subscribers?: Prisma.SubscriptionUncheckedUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUncheckedUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithWhereUniqueWithoutWatchHistoryInput = {
@@ -713,6 +794,9 @@ export type UserCreateWithoutSubscriptionsInput = {
   videos?: Prisma.VideoCreateNestedManyWithoutOwnerInput
   watchHistory?: Prisma.VideoCreateNestedManyWithoutWatchedByInput
   subscribers?: Prisma.SubscriptionCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubscriptionsInput = {
@@ -729,6 +813,9 @@ export type UserUncheckedCreateWithoutSubscriptionsInput = {
   videos?: Prisma.VideoUncheckedCreateNestedManyWithoutOwnerInput
   watchHistory?: Prisma.VideoUncheckedCreateNestedManyWithoutWatchedByInput
   subscribers?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetUncheckedCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubscriptionsInput = {
@@ -750,6 +837,9 @@ export type UserCreateWithoutSubscribersInput = {
   videos?: Prisma.VideoCreateNestedManyWithoutOwnerInput
   watchHistory?: Prisma.VideoCreateNestedManyWithoutWatchedByInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutSubscriberInput
+  tweets?: Prisma.TweetCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubscribersInput = {
@@ -766,6 +856,9 @@ export type UserUncheckedCreateWithoutSubscribersInput = {
   videos?: Prisma.VideoUncheckedCreateNestedManyWithoutOwnerInput
   watchHistory?: Prisma.VideoUncheckedCreateNestedManyWithoutWatchedByInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutSubscriberInput
+  tweets?: Prisma.TweetUncheckedCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubscribersInput = {
@@ -798,6 +891,9 @@ export type UserUpdateWithoutSubscriptionsInput = {
   videos?: Prisma.VideoUpdateManyWithoutOwnerNestedInput
   watchHistory?: Prisma.VideoUpdateManyWithoutWatchedByNestedInput
   subscribers?: Prisma.SubscriptionUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubscriptionsInput = {
@@ -814,6 +910,9 @@ export type UserUncheckedUpdateWithoutSubscriptionsInput = {
   videos?: Prisma.VideoUncheckedUpdateManyWithoutOwnerNestedInput
   watchHistory?: Prisma.VideoUncheckedUpdateManyWithoutWatchedByNestedInput
   subscribers?: Prisma.SubscriptionUncheckedUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUncheckedUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutSubscribersInput = {
@@ -841,6 +940,9 @@ export type UserUpdateWithoutSubscribersInput = {
   videos?: Prisma.VideoUpdateManyWithoutOwnerNestedInput
   watchHistory?: Prisma.VideoUpdateManyWithoutWatchedByNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutSubscriberNestedInput
+  tweets?: Prisma.TweetUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubscribersInput = {
@@ -857,6 +959,285 @@ export type UserUncheckedUpdateWithoutSubscribersInput = {
   videos?: Prisma.VideoUncheckedUpdateManyWithoutOwnerNestedInput
   watchHistory?: Prisma.VideoUncheckedUpdateManyWithoutWatchedByNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutSubscriberNestedInput
+  tweets?: Prisma.TweetUncheckedUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTweetsInput = {
+  id?: string
+  username: string
+  email: string
+  fullName: string
+  password: string
+  avatar: string
+  coverImage?: string | null
+  refreshToken?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  videos?: Prisma.VideoCreateNestedManyWithoutOwnerInput
+  watchHistory?: Prisma.VideoCreateNestedManyWithoutWatchedByInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutSubscriberInput
+  subscribers?: Prisma.SubscriptionCreateNestedManyWithoutChannelInput
+  comments?: Prisma.CommentCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTweetsInput = {
+  id?: string
+  username: string
+  email: string
+  fullName: string
+  password: string
+  avatar: string
+  coverImage?: string | null
+  refreshToken?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  videos?: Prisma.VideoUncheckedCreateNestedManyWithoutOwnerInput
+  watchHistory?: Prisma.VideoUncheckedCreateNestedManyWithoutWatchedByInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutSubscriberInput
+  subscribers?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutChannelInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTweetsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTweetsInput, Prisma.UserUncheckedCreateWithoutTweetsInput>
+}
+
+export type UserUpsertWithoutTweetsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTweetsInput, Prisma.UserUncheckedUpdateWithoutTweetsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTweetsInput, Prisma.UserUncheckedCreateWithoutTweetsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTweetsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTweetsInput, Prisma.UserUncheckedUpdateWithoutTweetsInput>
+}
+
+export type UserUpdateWithoutTweetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  videos?: Prisma.VideoUpdateManyWithoutOwnerNestedInput
+  watchHistory?: Prisma.VideoUpdateManyWithoutWatchedByNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutSubscriberNestedInput
+  subscribers?: Prisma.SubscriptionUpdateManyWithoutChannelNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTweetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  videos?: Prisma.VideoUncheckedUpdateManyWithoutOwnerNestedInput
+  watchHistory?: Prisma.VideoUncheckedUpdateManyWithoutWatchedByNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutSubscriberNestedInput
+  subscribers?: Prisma.SubscriptionUncheckedUpdateManyWithoutChannelNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCommentsInput = {
+  id?: string
+  username: string
+  email: string
+  fullName: string
+  password: string
+  avatar: string
+  coverImage?: string | null
+  refreshToken?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  videos?: Prisma.VideoCreateNestedManyWithoutOwnerInput
+  watchHistory?: Prisma.VideoCreateNestedManyWithoutWatchedByInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutSubscriberInput
+  subscribers?: Prisma.SubscriptionCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCommentsInput = {
+  id?: string
+  username: string
+  email: string
+  fullName: string
+  password: string
+  avatar: string
+  coverImage?: string | null
+  refreshToken?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  videos?: Prisma.VideoUncheckedCreateNestedManyWithoutOwnerInput
+  watchHistory?: Prisma.VideoUncheckedCreateNestedManyWithoutWatchedByInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutSubscriberInput
+  subscribers?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetUncheckedCreateNestedManyWithoutOwnerInput
+  like?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCommentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCommentsInput, Prisma.UserUncheckedCreateWithoutCommentsInput>
+}
+
+export type UserUpsertWithoutCommentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCommentsInput, Prisma.UserUncheckedUpdateWithoutCommentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCommentsInput, Prisma.UserUncheckedCreateWithoutCommentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCommentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCommentsInput, Prisma.UserUncheckedUpdateWithoutCommentsInput>
+}
+
+export type UserUpdateWithoutCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  videos?: Prisma.VideoUpdateManyWithoutOwnerNestedInput
+  watchHistory?: Prisma.VideoUpdateManyWithoutWatchedByNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutSubscriberNestedInput
+  subscribers?: Prisma.SubscriptionUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  videos?: Prisma.VideoUncheckedUpdateManyWithoutOwnerNestedInput
+  watchHistory?: Prisma.VideoUncheckedUpdateManyWithoutWatchedByNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutSubscriberNestedInput
+  subscribers?: Prisma.SubscriptionUncheckedUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUncheckedUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutLikeInput = {
+  id?: string
+  username: string
+  email: string
+  fullName: string
+  password: string
+  avatar: string
+  coverImage?: string | null
+  refreshToken?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  videos?: Prisma.VideoCreateNestedManyWithoutOwnerInput
+  watchHistory?: Prisma.VideoCreateNestedManyWithoutWatchedByInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutSubscriberInput
+  subscribers?: Prisma.SubscriptionCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentCreateNestedManyWithoutOwnerInput
+}
+
+export type UserUncheckedCreateWithoutLikeInput = {
+  id?: string
+  username: string
+  email: string
+  fullName: string
+  password: string
+  avatar: string
+  coverImage?: string | null
+  refreshToken?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  videos?: Prisma.VideoUncheckedCreateNestedManyWithoutOwnerInput
+  watchHistory?: Prisma.VideoUncheckedCreateNestedManyWithoutWatchedByInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutSubscriberInput
+  subscribers?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutChannelInput
+  tweets?: Prisma.TweetUncheckedCreateNestedManyWithoutOwnerInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutOwnerInput
+}
+
+export type UserCreateOrConnectWithoutLikeInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLikeInput, Prisma.UserUncheckedCreateWithoutLikeInput>
+}
+
+export type UserUpsertWithoutLikeInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLikeInput, Prisma.UserUncheckedUpdateWithoutLikeInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLikeInput, Prisma.UserUncheckedCreateWithoutLikeInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLikeInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLikeInput, Prisma.UserUncheckedUpdateWithoutLikeInput>
+}
+
+export type UserUpdateWithoutLikeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  videos?: Prisma.VideoUpdateManyWithoutOwnerNestedInput
+  watchHistory?: Prisma.VideoUpdateManyWithoutWatchedByNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutSubscriberNestedInput
+  subscribers?: Prisma.SubscriptionUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLikeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  videos?: Prisma.VideoUncheckedUpdateManyWithoutOwnerNestedInput
+  watchHistory?: Prisma.VideoUncheckedUpdateManyWithoutWatchedByNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutSubscriberNestedInput
+  subscribers?: Prisma.SubscriptionUncheckedUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUncheckedUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUpdateWithoutWatchHistoryInput = {
@@ -873,6 +1254,9 @@ export type UserUpdateWithoutWatchHistoryInput = {
   videos?: Prisma.VideoUpdateManyWithoutOwnerNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutSubscriberNestedInput
   subscribers?: Prisma.SubscriptionUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWatchHistoryInput = {
@@ -889,6 +1273,9 @@ export type UserUncheckedUpdateWithoutWatchHistoryInput = {
   videos?: Prisma.VideoUncheckedUpdateManyWithoutOwnerNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutSubscriberNestedInput
   subscribers?: Prisma.SubscriptionUncheckedUpdateManyWithoutChannelNestedInput
+  tweets?: Prisma.TweetUncheckedUpdateManyWithoutOwnerNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutOwnerNestedInput
+  like?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutWatchHistoryInput = {
@@ -914,6 +1301,9 @@ export type UserCountOutputType = {
   watchHistory: number
   subscriptions: number
   subscribers: number
+  tweets: number
+  comments: number
+  like: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -921,6 +1311,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   watchHistory?: boolean | UserCountOutputTypeCountWatchHistoryArgs
   subscriptions?: boolean | UserCountOutputTypeCountSubscriptionsArgs
   subscribers?: boolean | UserCountOutputTypeCountSubscribersArgs
+  tweets?: boolean | UserCountOutputTypeCountTweetsArgs
+  comments?: boolean | UserCountOutputTypeCountCommentsArgs
+  like?: boolean | UserCountOutputTypeCountLikeArgs
 }
 
 /**
@@ -961,6 +1354,27 @@ export type UserCountOutputTypeCountSubscribersArgs<ExtArgs extends runtime.Type
   where?: Prisma.SubscriptionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTweetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TweetWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CommentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLikeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LikeWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -977,6 +1391,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   watchHistory?: boolean | Prisma.User$watchHistoryArgs<ExtArgs>
   subscriptions?: boolean | Prisma.User$subscriptionsArgs<ExtArgs>
   subscribers?: boolean | Prisma.User$subscribersArgs<ExtArgs>
+  tweets?: boolean | Prisma.User$tweetsArgs<ExtArgs>
+  comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
+  like?: boolean | Prisma.User$likeArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1025,6 +1442,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   watchHistory?: boolean | Prisma.User$watchHistoryArgs<ExtArgs>
   subscriptions?: boolean | Prisma.User$subscriptionsArgs<ExtArgs>
   subscribers?: boolean | Prisma.User$subscribersArgs<ExtArgs>
+  tweets?: boolean | Prisma.User$tweetsArgs<ExtArgs>
+  comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
+  like?: boolean | Prisma.User$likeArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1037,6 +1457,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     watchHistory: Prisma.$VideoPayload<ExtArgs>[]
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
     subscribers: Prisma.$SubscriptionPayload<ExtArgs>[]
+    tweets: Prisma.$TweetPayload<ExtArgs>[]
+    comments: Prisma.$CommentPayload<ExtArgs>[]
+    like: Prisma.$LikePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1447,6 +1870,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   watchHistory<T extends Prisma.User$watchHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$watchHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.User$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscribers<T extends Prisma.User$subscribersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscribersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tweets<T extends Prisma.User$tweetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tweetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TweetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  comments<T extends Prisma.User$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  like<T extends Prisma.User$likeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$likeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1972,6 +2398,78 @@ export type User$subscribersArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
+}
+
+/**
+ * User.tweets
+ */
+export type User$tweetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tweet
+   */
+  select?: Prisma.TweetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tweet
+   */
+  omit?: Prisma.TweetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TweetInclude<ExtArgs> | null
+  where?: Prisma.TweetWhereInput
+  orderBy?: Prisma.TweetOrderByWithRelationInput | Prisma.TweetOrderByWithRelationInput[]
+  cursor?: Prisma.TweetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TweetScalarFieldEnum | Prisma.TweetScalarFieldEnum[]
+}
+
+/**
+ * User.comments
+ */
+export type User$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Comment
+   */
+  select?: Prisma.CommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Comment
+   */
+  omit?: Prisma.CommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CommentInclude<ExtArgs> | null
+  where?: Prisma.CommentWhereInput
+  orderBy?: Prisma.CommentOrderByWithRelationInput | Prisma.CommentOrderByWithRelationInput[]
+  cursor?: Prisma.CommentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CommentScalarFieldEnum | Prisma.CommentScalarFieldEnum[]
+}
+
+/**
+ * User.like
+ */
+export type User$likeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Like
+   */
+  select?: Prisma.LikeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Like
+   */
+  omit?: Prisma.LikeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LikeInclude<ExtArgs> | null
+  where?: Prisma.LikeWhereInput
+  orderBy?: Prisma.LikeOrderByWithRelationInput | Prisma.LikeOrderByWithRelationInput[]
+  cursor?: Prisma.LikeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LikeScalarFieldEnum | Prisma.LikeScalarFieldEnum[]
 }
 
 /**

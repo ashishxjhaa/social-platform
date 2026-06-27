@@ -11,4 +11,7 @@
 export type * from './models/User.ts'
 export type * from './models/Video.ts'
 export type * from './models/Subscription.ts'
+export type * from './models/Tweet.ts'
+export type * from './models/Comment.ts'
+export type * from './models/Like.ts'
 export type * from './commonInputTypes.ts'

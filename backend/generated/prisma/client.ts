@@ -56,3 +56,18 @@ export type Video = Prisma.VideoModel
  * 
  */
 export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model Tweet
+ * 
+ */
+export type Tweet = Prisma.TweetModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel
+/**
+ * Model Like
+ * 
+ */
+export type Like = Prisma.LikeModel
